@@ -1,32 +1,213 @@
+```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carte des biens</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Carte des biens immobiliers</title>
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f5f5f5;
+}
+
+header{
+    background:#1f2937;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+#map{
+    height:600px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.bien{
+    background:white;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:10px;
+    box-shadow:0 2px 4px rgba(0,0,0,.1);
+}
+
+.bien h3{
+    margin-top:0;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:10px;
+    background:#2563eb;
+    color:white;
+    padding:10px 15px;
+    border-radius:6px;
+    text-decoration:none;
+}
+</style>
 </head>
+
 <body>
 
-    <h1>Mes biens immobiliers</h1>
-    <p>Version forcée 2</p>
+<header>
+    <h1>Nos biens à vendre</h1>
+    <p>10 biens disponibles</p>
+</header>
 
-    <p>GitHub Pages fonctionne !</p>
+<div id="map"></div>
 
-    <ul>
-        <li>
-            Appartement T3 Montpellier -
-            <a href="https://www.google.fr" target="_blank">
-                Voir la fiche
-            </a>
-        </li>
+<div class="container" id="listeBiens"></div>
 
-        <li>
-            Maison familiale Castelnau -
-            <a href="https://www.google.fr" target="_blank">
-                Voir la fiche
-            </a>
-        </li>
-    </ul>
-<p>Version 2 - 16/06/2026</p>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+const biens = [
+
+{
+title:"Appartement T2 Montpellier",
+price:"189 000 €",
+city:"Montpellier",
+lat:43.6108,
+lng:3.8767,
+url:"https://kevinfdemo.netty.fr/vente"
+},
+
+{
+title:"Appartement T3 Centre",
+price:"245 000 €",
+city:"Montpellier",
+lat:43.6050,
+lng:3.8890,
+url:"https://kevinfdemo.netty.fr/vente"
+},
+
+{
+title:"Maison familiale",
+price:"395 000 €",
+city:"Castelnau-le-Lez",
+lat:43.6333,
+lng:3.9000,
+url:"https://kevinfdemo.netty.fr/vente"
+},
+
+{
+title:"Villa piscine",
+price:"620 000 €",
+city:"Juvignac",
+lat:43.6135,
+lng:3.8100,
+url:"https://kevinfdemo.netty.fr/vente"
+},
+
+{
+title:"Appartement T4",
+price:"315 000 €",
+city:"Lattes",
+lat:43.5670,
+lng:3.9020,
+url:"https://kevinfdemo.netty.fr/vente"
+},
+
+{
+title:"Maison de ville",
+price:"359 000 €",
+city:"Pérols",
+lat:43.5655,
+lng:3.9518,
+url:"https://kevinfdemo.netty.fr/vente"
+},
+
+{
+title:"Studio investissement",
+price:"119 000 €",
+city:"Montpellier",
+lat:43.6180,
+lng:3.8500,
+url:"https://kevinfdemo.netty.fr/vente"
+},
+
+{
+title:"Vue mer",
+price:"429 000 €",
+city:"Palavas-les-Flots",
+lat:43.5290,
+lng:3.9310,
+url:"https://kevinfdemo.netty.fr/vente"
+},
+
+{
+title:"Maison contemporaine",
+price:"549 000 €",
+city:"Mauguio",
+lat:43.6160,
+lng:4.0070,
+url:"https://kevinfdemo.netty.fr/vente"
+},
+
+{
+title:"Villa prestige",
+price:"890 000 €",
+city:"Saint-Gély-du-Fesc",
+lat:43.6920,
+lng:3.8040,
+url:"https://kevinfdemo.netty.fr/vente"
+}
+
+];
+
+const map = L.map('map').setView([43.6108,3.8767],11);
+
+L.tileLayer(
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+attribution:'© OpenStreetMap'
+}
+).addTo(map);
+
+const liste = document.getElementById("listeBiens");
+
+biens.forEach(bien => {
+
+L.marker([bien.lat,bien.lng])
+.addTo(map)
+.bindPopup(
+`
+<b>${bien.title}</b><br>
+${bien.city}<br>
+<strong>${bien.price}</strong><br><br>
+<a href="${bien.url}" target="_top">
+Voir la fiche
+</a>
+`
+);
+
+liste.innerHTML += `
+<div class="bien">
+<h3>${bien.title}</h3>
+<p>${bien.city}</p>
+<p><strong>${bien.price}</strong></p>
+<a class="btn" href="${bien.url}" target="_top">
+Voir la fiche
+</a>
+</div>
+`;
+
+});
+
+</script>
+
 </body>
 </html>
+```
